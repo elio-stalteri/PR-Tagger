@@ -33,6 +33,10 @@ export const REPOS = gql`
                     nodes {
                       diffHunk
                       bodyHTML
+                      url
+                      author {
+                        avatarUrl(size: 50)
+                      }
                     }
                   }
                 }

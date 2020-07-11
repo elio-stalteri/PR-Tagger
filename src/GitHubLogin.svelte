@@ -27,7 +27,7 @@
     popupWindow.close();
   };
   // ReactGithubLogin based
-  const poll = (callback) => {
+  const poll = callback => {
     interval = window.setInterval(() => {
       try {
         if (!popupWindow || popupWindow.closed !== false) {
@@ -41,7 +41,6 @@
         ) {
           return;
         }
-
 
         dispatch("success", convertQueryParams(popupWindow.location.search));
         close();
@@ -67,7 +66,7 @@
     dispatch("request");
     poll();
 
-/*
+    /*
     POST https://github.com/login/oauth/access_token
 Parameters
 Name	Type	Description
@@ -77,8 +76,6 @@ code	string	Required. The code you received as a response to Step 1.
 redirect_uri	string	The URL in your application where users are sent after authorization.
 */
   };
-
-  
 </script>
 
 <slot {onLogin} />

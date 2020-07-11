@@ -84,10 +84,34 @@
 </script>
 
 <div class="flex flex-row absolute top-0 left-0 w-screen">
-  <div class="flex-none w-64 h-screen bg-white overflow-y-scroll" >
-    <h1 class=" text-orange-600 font-extrabold text-center text-4xl border-gray-900 border-b-1 shadow-lg">PR Analyzer</h1>
+  <div class="flex-none w-64 h-screen bg-white overflow-y-scroll">
+    <h1 class=" text-orange-600 font-extrabold text-center text-4xl shadow-lg">
+      PR Analyzer
+    </h1>
+    <div class="my-4 px-2 pb-4 border-gray-600 border-opacity-50 border-b">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="organization">
+        Organization Name
+      </label>
+      <div class="flex justify-between">
+        <input
+          class="shadow appearance-none border border-blue-500 rounded rounded-r-none w-full py-1 px-3
+          text-gray-700 leading-tight focus:outline-none"
+          id="organization"
+          type="text"
+          placeholder="Facebook" />
+        <button
+          class="bg-blue-500 border-blue-500 border hover:bg-blue-700 text-white font-bold py-2 px-4
+          rounded rounded-l-none focus:outline-none text-sm"
+          type="button">
+          search
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="flex-auto bg-orange-300  py-10 block m-0 h-screen overflow-y-scroll">
+  <div
+    class="flex-auto bg-orange-300 py-10 block m-0 h-screen overflow-y-scroll">
     {#await $books}
       <li>Loading...</li>
     {:then result}
@@ -101,12 +125,19 @@
                     <div
                       class="w-11/12 rounded-lg overflow-hidden shadow-lg
                       mx-auto mb-10 bg-white p-6">
-                      <div>
+                      <div class="flex mb-6">
+                        {#if comment.author}
+                          <img
+                            src={comment.author.avatarUrl}
+                            alt="editor"
+                            class="rounded-full w-16 h-16 flex-none mr-2" />
+                        {/if}
                         {@html comment.bodyHTML}
                       </div>
                       <pre
                         class="bg-gray-800 text-gray-100 py-8 px-1
-                        scrolling-auto overflow-x-scroll w-full font-mono text-sm">
+                        scrolling-auto overflow-x-scroll w-full font-mono
+                        text-sm">
 
                         {#each comment.diffHunk.split('\n') as row}
                           <span
