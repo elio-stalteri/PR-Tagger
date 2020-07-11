@@ -96,14 +96,15 @@
       </label>
       <div class="flex justify-between">
         <input
-          class="shadow appearance-none border border-blue-500 rounded rounded-r-none w-full py-1 px-3
-          text-gray-700 leading-tight focus:outline-none"
+          class="shadow appearance-none border border-blue-500 rounded
+          rounded-r-none w-full py-1 px-3 text-gray-700 leading-tight
+          focus:outline-none"
           id="organization"
           type="text"
           placeholder="Facebook" />
         <button
-          class="bg-blue-500 border-blue-500 border hover:bg-blue-700 text-white font-bold py-2 px-4
-          rounded rounded-l-none focus:outline-none text-sm"
+          class="bg-blue-500 border-blue-500 border hover:bg-blue-700 text-white
+          font-bold py-2 px-4 rounded rounded-l-none focus:outline-none text-sm"
           type="button">
           search
         </button>
@@ -134,18 +135,28 @@
                         {/if}
                         {@html comment.bodyHTML}
                       </div>
+                      <div class="flex">
+                      <pre class="flex bg-gray-800 text-gray-100 py-6 font-mono">
+                        <pre class="flex-none w-10 bg-red-600 bg-opacity-50">
+                        </pre>
+                        <pre class="flex-none w-10 bg-green-600 bg-opacity-50">
+                        </pre>
+                      </pre>
                       <pre
-                        class="bg-gray-800 text-gray-100 py-8 px-1
-                        scrolling-auto overflow-x-scroll w-full font-mono
+                        class="bg-gray-800 text-gray-100 py-6
+                         overflow-x-scroll w-full font-mono
                         text-sm">
-
-                        {#each comment.diffHunk.split('\n') as row}
-                          <span
-                            class={`block h-5 bg-opacity-50 w-full text-xs leading-5 align-middle font-mono ${row.charAt(0) == '+' ? 'bg-green-600' : row.charAt(0) == '-' ? 'bg-red-600' : ''}`}>
-                            {row.trim()}
-                          </span>
+                        {#each comment.diffHunk.split('\n') as row, idx}
+                          {#if idx !== 0}
+                            <span
+                              class="block h-5 bg-opacity-50 w-full text-xs
+                              leading-5 align-middle font-mono {row.charAt(0) == '+' ? 'bg-green-600' : row.charAt(0) == '-' ? 'bg-red-600' : ''}">
+                              {row}
+                            </span>
+                          {/if}
                         {/each}
                       </pre>
+                      </div>
                     </div>
                   {/each}
                 {/if}
