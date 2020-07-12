@@ -3,13 +3,27 @@
   import CodeViewer from "./CodeViewer.svelte";
   export let comment = false;
   export let index = 0;
+  let toggleComment = false;
 </script>
 
 {#if comment}
   <div
-    transition:slide={{ delay: index * 100 + 500, duration: 500 }}
+    in:slide={{ delay: index * 100 + 300, duration: 350 }}
     class="w-11/12 rounded-lg overflow-hidden shadow-lg mx-auto mb-10 bg-white
-    p-6">
+    p-4">
+    <div
+      class="w-full mb-6 border-b border-gray-500 border-opacity-75 {toggleComment ? '' : 'h-7'}">
+      {#if toggleComment}
+        <CodeViewer diffHunk={comment.diff_hunk} />
+      {/if}
+      <div
+        class="w-full text-center cursor-pointer text-green-700 h-7"
+        on:click={() => {
+          toggleComment = !toggleComment;
+        }}>
+        {toggleComment?"hide code":"show code"}
+      </div>
+    </div>
     <div class="flex mb-6">
       {#if comment.user}
         <img
@@ -21,6 +35,6 @@
         {@html comment.body}
       </div>
     </div>
-    <CodeViewer diffHunk={comment.diff_hunk} />
+
   </div>
 {/if}

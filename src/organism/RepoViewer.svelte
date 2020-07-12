@@ -17,19 +17,24 @@
 
   export let org = "facebook";
   export let repo = "pyre2";
-  $: comments = getRepoComments(org, repo);
+  $: comments = repo != "" ? getRepoComments(org, repo) : false;
 </script>
 
-{#await comments}
-  <li>Loading...</li>
-{:then result}
-  {#each result as comment, idx}
-    {#if comment}
-      <CommentViewer {comment} index={idx} />
+{#if comments}
+  {#await comments}
+    <li>Loading...</li>
+  {:then result}
+    {#if result.length === 0}
+      no result
+    {:else}
+      {#each result as comment, idx}
+        {#if comment}
+          <CommentViewer {comment} index={idx} />
+        {/if}
+      {/each}
     {/if}
-  {/each}
-{:catch error}
-  {localStorage.removeItem('GithubLogInTocken') ? '' : ''}
-  <li>ERROR: {error}</li>
-{/await}
-
+  {:catch error}
+    {localStorage.removeItem('GithubLogInTocken') ? '' : ''}
+    <li>ERROR: {error}</li>
+  {/await}
+{/if}

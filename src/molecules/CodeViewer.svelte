@@ -1,4 +1,6 @@
 <script>
+  import { slide } from "svelte/transition";
+
   export let diffHunk = "";
   $: diffSplit = diffHunk.split("\n");
   $: rows = diffSplit.filter((_, idx) => idx !== 0);
@@ -22,7 +24,7 @@
   $: rowsIdxNegative = RowIdxMapper("+", rows);
 </script>
 
-<div class="flex">
+<div class="flex overflow-hidden" transition:slide={{ duration: 350 }}>
   <pre class="flex bg-gray-800 text-gray-100 py-6 font-mono">
     <pre class="flex-none w-10 bg-opacity-50">
       {#each rowsIdxNegative as row}
