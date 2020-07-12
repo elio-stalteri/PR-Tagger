@@ -72,6 +72,12 @@
           id="organization"
           type="text"
           placeholder="Organization"
+          on:keydown={event => {
+            if (event.keyCode === 13) {
+              SelectedOrgname = OrgName;
+              SelectedRepo = '';
+            }
+          }}
           bind:value={OrgName} />
         <button
           class="bg-blue-500 border-blue-500 border hover:bg-blue-700 text-white

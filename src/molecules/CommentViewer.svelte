@@ -35,7 +35,7 @@
           </button>
           <input class=" flex-none shadow appearance-none border border-blue-500 rounded
           w-40 py-2 px-3 ml-3 text-gray-700 leading-tight focus:outline-none sticky
-          top-0 text-sm" id="organization" type="text" placeholder="Search Tag">
+          top-0 text-sm"  type="text" placeholder="Search Tag" />
         </div>
       </div>
       <div
