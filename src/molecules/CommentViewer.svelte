@@ -33,13 +33,15 @@
             }}>
             {toggleComment ? 'hide code' : 'show code'}
           </Button>
-          <input class=" flex-none shadow appearance-none border border-blue-500 rounded
-          w-40 py-2 px-3 ml-3 text-gray-700 leading-tight focus:outline-none sticky
-          top-0 text-sm"  type="text" placeholder="Search Tag" />
+          <input
+            class=" flex-none shadow appearance-none border border-blue-500
+            rounded w-40 py-2 px-3 ml-3 text-gray-700 leading-tight
+            focus:outline-none sticky top-0 text-sm"
+            type="text"
+            placeholder="Search Tag" />
         </div>
       </div>
-      <div
-        class="w-full mb-6 ">
+      <div class="w-full mb-6 ">
         {#if toggleComment}
           <CodeViewer diffHunk={comment.diff_hunk} />
         {/if}
