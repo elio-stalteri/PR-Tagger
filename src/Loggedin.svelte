@@ -123,7 +123,7 @@
               on:click={() => {
                 SelectedRepo = repo.name;
               }}
-              class="px-2 p-2 border-gray-500 border-opacity-75 border-t {SelectedRepo === repo.name ? 'bg-teal-300 bg-opacity-75' : 'cursor-pointer hover:bg-teal-300 hover:bg-opacity-25'}">
+              class="px-2 p-2 border-gray-500 border-opacity-75 border-t {SelectedRepo === repo.name ? 'bg-orange-300 bg-opacity-75' : 'cursor-pointer hover:bg-orange-300 hover:bg-opacity-25'}">
               {repo.name}
             </div>
           {/each}
