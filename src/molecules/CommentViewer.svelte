@@ -28,7 +28,7 @@
   </div>
 {:else if comment && (tag !== false || commentsIds.indexOf(`${comment.id}`) === -1)}
   <div
-    in:slide={{ delay: index * 100 + 300, duration: 350 }}
+    in:slide={{ delay: index * 50 + 100, duration: 350 }}
     class="w-11/12 rounded-lg overflow-hidden shadow-lg mx-auto mb-10 bg-white
     p-4">
     <div class="w-full -mt-4 border-b border-gray-500 border-opacity-75 py-2">
