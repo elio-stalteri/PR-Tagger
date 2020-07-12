@@ -1,7 +1,7 @@
 <script>
   import { ClientId } from "./GitHubConfig.js";
   import Tailwind from "./tailwind.svelte";
-  import Loggedin from "./Loggedin.svelte";
+  import LoggedIn from "./Loggedin.svelte";
   import GithubLogin from "./GitHubLogin.svelte";
   export let name;
   const convertQueryParams = url => {
@@ -75,5 +75,5 @@
     </GithubLogin>
   </main>
 {:else}
-  <Loggedin {LogInTocken} />
+  <LoggedIn {LogInTocken} />
 {/if}
