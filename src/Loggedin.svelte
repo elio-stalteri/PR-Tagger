@@ -42,13 +42,6 @@
   });
 
   setClient(apolloClient);
-
-  /*
-    facebook
-    pyre2
-    Port to python3
-  */
-  
 </script>
 
 <div class="flex flex-row absolute top-0 left-0 w-screen">

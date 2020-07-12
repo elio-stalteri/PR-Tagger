@@ -5,6 +5,12 @@
   const client = getClient();
   import { REPOS } from "../queries.js";
 
+  /*
+    facebook
+    pyre2
+    Port to python3
+  */
+
   const repos = query(client, {
     query: REPOS
   });
