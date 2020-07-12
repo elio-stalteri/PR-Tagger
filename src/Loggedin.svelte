@@ -172,6 +172,6 @@
 
       </ul>
     </div>
-    <RepoViewer org={SelectedOrgname} repo={SelectedRepo} />
+    <RepoViewer org={SelectedOrgname} repo={SelectedRepo} {menuSelected} />
   </div>
 </div>

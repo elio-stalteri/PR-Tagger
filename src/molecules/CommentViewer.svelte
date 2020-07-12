@@ -3,6 +3,7 @@
   import Button from "../atoms/Button.svelte";
 
   import CodeViewer from "./CodeViewer.svelte";
+  export let tag = false;
   export let loading = false;
   export let comment = false;
   export let index = 0;
@@ -25,7 +26,7 @@
       <div class="skeleton-box flex-grow" />
     </div>
   </div>
-{:else if comment && commentsIds.indexOf(`${comment.id}`) === -1}
+{:else if comment && (tag !== false || commentsIds.indexOf(`${comment.id}`) === -1)}
   <div
     in:slide={{ delay: index * 100 + 300, duration: 350 }}
     class="w-11/12 rounded-lg overflow-hidden shadow-lg mx-auto mb-10 bg-white
@@ -38,25 +39,36 @@
           }}>
           {toggleComment ? 'hide code' : 'show code'}
         </Button>
-        <input
-          class=" flex-none shadow appearance-none border border-blue-500
-          rounded w-40 py-2 px-3 mx-3 text-gray-700 leading-tight
-          focus:outline-none sticky top-0 text-xs"
-          type="text"
-          bind:value={TagName}
-          placeholder="Tag Name" />
-        <Button
-          on:click={() => {
-            updateTag(TagName, comment).then(() => {
-              console.log('added');
-              getCommentsIds().then(res => {
-                  console.log(res)
-                commentsIds = res;
-              });
-            });
-          }}>
-          Save Comment
-        </Button>
+
+        {#if tag}
+          <div
+            class="flex-none hover:bg-gray-100 font-semibold py-2 px-4 mx-3
+            border border-gray-400 rounded-lg shadow outline-none leading-3 text-xs
+            text-white bg-orange-600 ">
+            {tag}
+          </div>
+        {:else}
+          <input
+            class=" flex-none shadow appearance-none border border-blue-500
+            rounded w-40 py-2 px-3 mx-3 text-gray-700 leading-tight
+            focus:outline-none sticky top-0 text-xs"
+            type="text"
+            bind:value={TagName}
+            placeholder="Tag Name" />
+          <Button
+            on:click={() => {
+              if (TagName !== '') {
+                updateTag(TagName, comment).then(() => {
+                  console.log('added');
+                  getCommentsIds().then(res => {
+                    commentsIds = res;
+                  });
+                });
+              }
+            }}>
+            Save Comment
+          </Button>
+        {/if}
       </div>
     </div>
     <div class="w-full mb-6 ">

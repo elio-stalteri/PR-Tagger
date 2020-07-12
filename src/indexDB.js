@@ -39,3 +39,13 @@ export async function getCommentsIds() {
   }
   return ids;
 }
+
+export async function getCommentsTagged() {
+  const keys = await idbKeyval.keys();
+  let ids = {};
+  for (const key of keys) {
+    const val = (await idbKeyval.get(key)) || {};
+    ids = { ...ids, [key]: val };
+  }
+  return ids;
+}
