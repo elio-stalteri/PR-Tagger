@@ -17,7 +17,9 @@
           alt="editor"
           class="rounded-full w-12 h-12 flex-none mr-2" />
       {/if}
-      {@html comment.bodyHTML}
+      <div>
+        {@html comment.bodyHTML}
+      </div>
     </div>
     <CodeViewer diffHunk={comment.diffHunk} />
   </div>

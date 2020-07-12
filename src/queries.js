@@ -19,6 +19,7 @@ export const REPOS = gql`
         totalCount
         nodes {
           id
+          name
           pushedAt
           pullRequests(first: 10) {
             totalCount
