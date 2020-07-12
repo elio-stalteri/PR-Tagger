@@ -55,6 +55,10 @@
   let RepoNameSearch = "";
   const menu = ["comments","categories","saved",]
   let menuSelected="comments"
+
+
+  import { idbKeyval } from "./indexDB.js";
+  idbKeyval.clear().then(()=>{console.log("db cleared")})
 </script>
 
 <div class="flex flex-row absolute top-0 left-0 w-screen">
