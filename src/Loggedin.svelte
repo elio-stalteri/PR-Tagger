@@ -1,7 +1,6 @@
 <script>
-  import { slide } from "svelte/transition";
-  import CommentViewer from "./molecules/CommentViewer.svelte";
-  import { setClient, getClient, query } from "svelte-apollo";
+  import RepoViewer from "./organism/RepoViewer.svelte";
+  import { setClient } from "svelte-apollo";
   //import gql from "graphql-tag";
   //import { REPOS } from "./queyrs.js";
 
@@ -49,11 +48,7 @@
     pyre2
     Port to python3
   */
-  import { REPOS } from "./queries.js";
-
-  const books = query(apolloClient, {
-    query: REPOS
-  });
+  
 </script>
 
 <div class="flex flex-row absolute top-0 left-0 w-screen">
@@ -86,29 +81,6 @@
   </div>
   <div
     class="flex-auto bg-orange-300 py-10 block m-0 h-screen overflow-y-scroll">
-    {#await $books}
-      <li>Loading...</li>
-    {:then result}
-      {#each result.data.organization.repositories.nodes as repo, idx}
-        {#if repo}
-          <h1 class="bg-green-200">{repo.name}</h1>
-          {#each repo.pullRequests.nodes as pr, idx1}
-            {#if pr}
-              <h1 class="bg-pink-200">{pr.title}</h1>
-              {#each pr.reviews.nodes as review, idx2}
-                {#if review}
-                  {#each review.comments.nodes as comment, idx3}
-                    <CommentViewer {comment} index={idx + idx1 + idx2 + idx3} />
-                  {/each}
-                {/if}
-              {/each}
-            {/if}
-          {/each}
-        {/if}
-      {/each}
-    {:catch error}
-      {localStorage.removeItem('GithubLogInTocken') ? '' : ''}
-      <li>ERROR: {error}</li>
-    {/await}
+    <RepoViewer />
   </div>
 </div>
