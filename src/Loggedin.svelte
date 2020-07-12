@@ -85,18 +85,27 @@
         </button>
       </div>
     </div>
-    <div class="my-4 px-2 pb-4 border-gray-600 border-opacity-50 border-b overflow-y-scroll h-full">
+    <div
+      class="my-4 px-2 pb-4 border-gray-600 border-opacity-50 border-b
+      overflow-y-scroll h-full">
       {#await repos}
-        ...loading
+        {#each [0, 0, 0, 0, 0, 0, 0] as _}
+          <div
+            in:slide={{ duration: 350 }}
+            class="skeleton-box px-2 p-2 border-gray-500 border-opacity-75
+            border-t text-white">
+            ...
+          </div>
+        {/each}
       {:then repos}
         <input
           class="mb-4 shadow appearance-none border border-blue-500 rounded
-          w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none sticky top-0"
+          w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none sticky
+          top-0"
           id="organization"
           type="text"
           placeholder="Search"
           bind:value={RepoNameSearch} />
-
         {#each repos.filter(repo =>
           RepoNameSearch.length > 0
             ? repo.name.indexOf(RepoNameSearch) > -1
