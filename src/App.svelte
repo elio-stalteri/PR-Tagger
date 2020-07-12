@@ -1,9 +1,10 @@
 <script>
+  import { ClientId } from "./GitHubConfig.js";
   import Tailwind from "./tailwind.svelte";
   import Loggedin from "./Loggedin.svelte";
   import GithubLogin from "./GitHubLogin.svelte";
   export let name;
-const convertQueryParams = url => {
+  const convertQueryParams = url => {
     const query = url;
     const result = {};
     query.split("&").forEach(param => {
@@ -12,13 +13,12 @@ const convertQueryParams = url => {
     });
     return result;
   };
-  let LogInTocken = localStorage.getItem('GithubLogInTocken');
-  console.log(LogInTocken)
+  let LogInTocken = localStorage.getItem("GithubLogInTocken");
+  console.log(LogInTocken);
 </script>
 
 <style>
-:global(body,
-  html) {
+  :global(body, html) {
     @apply bg-orange-300;
     @apply p-0;
     @apply m-0;
@@ -46,7 +46,6 @@ const convertQueryParams = url => {
 
 <Tailwind />
 {#if !LogInTocken}
-  <!-- content here -->
   <main>
     <h1 class="font-bold">Hello {name}!</h1>
     <p>
@@ -56,7 +55,7 @@ const convertQueryParams = url => {
     </p>
 
     <GithubLogin
-      clientId="your client id"
+      clientId={ClientId}
       scope="user:email"
       redirectUri="http://localhost:5000/"
       on:success={params => {
@@ -65,10 +64,9 @@ const convertQueryParams = url => {
             return response.text();
           })
           .then(function(data) {
-			  LogInTocken = convertQueryParams(data).access_token
-			  localStorage.setItem('GithubLogInTocken', LogInTocken);
+            LogInTocken = convertQueryParams(data).access_token;
+            localStorage.setItem('GithubLogInTocken', LogInTocken);
             console.log('LogInTocken', LogInTocken);
-
           });
       }}
       on:error={error => console.log(error)}
