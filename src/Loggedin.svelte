@@ -1,4 +1,5 @@
 <script>
+  import CodeViewer from "./organism/CodeViewer.svelte";
   import { setClient, getClient, query } from "svelte-apollo";
   //import gql from "graphql-tag";
   //import { REPOS } from "./queyrs.js";
@@ -135,28 +136,7 @@
                         {/if}
                         {@html comment.bodyHTML}
                       </div>
-                      <div class="flex">
-                      <pre class="flex bg-gray-800 text-gray-100 py-6 font-mono">
-                        <pre class="flex-none w-10 bg-red-600 bg-opacity-50">
-                        </pre>
-                        <pre class="flex-none w-10 bg-green-600 bg-opacity-50">
-                        </pre>
-                      </pre>
-                      <pre
-                        class="bg-gray-800 text-gray-100 py-6
-                         overflow-x-scroll w-full font-mono
-                        text-sm">
-                        {#each comment.diffHunk.split('\n') as row, idx}
-                          {#if idx !== 0}
-                            <span
-                              class="block h-5 bg-opacity-50 w-full text-xs
-                              leading-5 align-middle font-mono {row.charAt(0) == '+' ? 'bg-green-600' : row.charAt(0) == '-' ? 'bg-red-600' : ''}">
-                              {row}
-                            </span>
-                          {/if}
-                        {/each}
-                      </pre>
-                      </div>
+                      <CodeViewer diffHunk={comment.diffHunk} />
                     </div>
                   {/each}
                 {/if}
