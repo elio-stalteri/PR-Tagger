@@ -1,5 +1,7 @@
 <script>
   import { slide } from "svelte/transition";
+  import Button from "../atoms/Button.svelte";
+
   import CodeViewer from "./CodeViewer.svelte";
   export let loading = false;
   export let comment = false;
@@ -25,14 +27,12 @@
       p-4">
       <div class="w-full -mt-4 border-b border-gray-500 border-opacity-75 py-2">
         <div class="w-full text-grey-700 h-7 flex flex-row">
-          <button
-            class=" w-32 flex-none bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2
-            px-4 border border-gray-400 rounded shadow focus:outline-none outline-none leading-3 text-sm"
+          <Button
             on:click={() => {
               toggleComment = !toggleComment;
             }}>
             {toggleComment ? 'hide code' : 'show code'}
-          </button>
+          </Button>
           <input class=" flex-none shadow appearance-none border border-blue-500 rounded
           w-40 py-2 px-3 ml-3 text-gray-700 leading-tight focus:outline-none sticky
           top-0 text-sm"  type="text" placeholder="Search Tag" />

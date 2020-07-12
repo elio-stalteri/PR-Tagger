@@ -1,6 +1,8 @@
 <script>
   import { slide } from "svelte/transition";
   import RepoViewer from "./organism/RepoViewer.svelte";
+  import Button from "./atoms/Button.svelte";
+
   /*
         import { setClient } from "svelte-apollo";
         //import gql from "graphql-tag";
@@ -51,11 +53,13 @@
   $: repos = getRepos(SelectedOrgname);
   let SelectedRepo = "pyre2";
   let RepoNameSearch = "";
+  const menu = ["comments","categories","saved",]
+  let menuSelected="comments"
 </script>
 
 <div class="flex flex-row absolute top-0 left-0 w-screen">
   <div class="flex-none w-64 h-screen bg-white overflow-y-hidden relative">
-    <h1 class=" text-orange-600 font-extrabold text-center text-4xl shadow-lg">
+    <h1 class=" text-orange-600 font-extrabold text-center text-4xl shadow-lg border-r border-grey-500">
       PR Analyzer
     </h1>
     <div class="my-4 px-2 pb-4 border-gray-600 border-opacity-50 border-b">
@@ -134,7 +138,38 @@
     </div>
   </div>
   <div
-    class="flex-auto bg-orange-300 py-10 block m-0 h-screen overflow-y-scroll">
+    class="flex-auto bg-orange-300 pb-10 block m-0 h-screen overflow-y-scroll relative">
+    <div class="shadow-lg  bg-white mb-10 sticky top-0 z-50">
+      <ul class="flex border-b capitalize">
+        {#each menu as item}
+          <!-- content here -->
+          {#if item===menuSelected}
+            <!-- content here -->
+            <li class="-mb-px mr-1">
+              <span
+                class="bg-orange-500 bg-opacity-75 inline-block border-l border-t border-r
+                rounded-t py-4 px-4 text-white font-semibold"
+                >
+                {item}
+              </span>
+            </li>
+          {:else}
+            <li class="mr-1">
+              <span
+                class="bg-white inline-block py-4 px-4 text-gray-800
+                 font-semibold cursor-pointer"
+                 on:click={()=>{
+                     menuSelected=item
+                 }}
+                >
+                {item}
+              </span>
+            </li>
+          {/if}
+        {/each}
+
+      </ul>
+    </div>
     <RepoViewer org={SelectedOrgname} repo={SelectedRepo} />
   </div>
 </div>
