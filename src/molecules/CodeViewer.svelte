@@ -1,5 +1,4 @@
 <script>
-  // your script goes here
   export let diffHunk = "";
   $: diffSplit = diffHunk.split("\n");
   $: rows = diffSplit.filter((_, idx) => idx !== 0);

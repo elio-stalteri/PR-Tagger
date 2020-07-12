@@ -1,5 +1,6 @@
 <script>
-  import CodeViewer from "./organism/CodeViewer.svelte";
+  import { slide } from "svelte/transition";
+  import CommentViewer from "./molecules/CommentViewer.svelte";
   import { setClient, getClient, query } from "svelte-apollo";
   //import gql from "graphql-tag";
   //import { REPOS } from "./queyrs.js";
@@ -117,27 +118,14 @@
     {#await $books}
       <li>Loading...</li>
     {:then result}
-      {#each result.data.organization.repositories.nodes as repo}
+      {#each result.data.organization.repositories.nodes as repo, idx}
         {#if repo}
-          {#each repo.pullRequests.nodes as pr}
+          {#each repo.pullRequests.nodes as pr, idx1}
             {#if pr}
-              {#each pr.reviews.nodes as review}
+              {#each pr.reviews.nodes as review, idx2}
                 {#if review}
-                  {#each review.comments.nodes as comment}
-                    <div
-                      class="w-11/12 rounded-lg overflow-hidden shadow-lg
-                      mx-auto mb-10 bg-white p-6">
-                      <div class="flex mb-6">
-                        {#if comment.author}
-                          <img
-                            src={comment.author.avatarUrl}
-                            alt="editor"
-                            class="rounded-full w-16 h-16 flex-none mr-2" />
-                        {/if}
-                        {@html comment.bodyHTML}
-                      </div>
-                      <CodeViewer diffHunk={comment.diffHunk} />
-                    </div>
+                  {#each review.comments.nodes as comment, idx3}
+                    <CommentViewer comment={comment} index={idx+idx1+idx2+idx3} />
                   {/each}
                 {/if}
               {/each}
