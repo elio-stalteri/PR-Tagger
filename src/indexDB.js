@@ -29,3 +29,13 @@ export async function updateTag(tag, comment) {
 
   await idbKeyval.set(tag, { ...val, [comment.id]: comment });
 }
+
+export async function getCommentsIds() {
+  const keys = await idbKeyval.keys();
+  let ids = [];
+  for (const key of keys) {
+    const val = (await idbKeyval.get(key)) || {};
+    ids = [...ids, ...Object.keys(val)];
+  }
+  return ids;
+}

@@ -8,9 +8,11 @@
   export let index = 0;
   let toggleComment = false;
 
-  import { updateTag } from "../indexDB.js";
+  import { updateTag, getCommentsIds } from "../indexDB.js";
 
-  let TagName = ""
+  let TagName = "";
+
+  export let commentsIds = [];
 </script>
 
 {#if loading}
@@ -23,7 +25,7 @@
       <div class="skeleton-box flex-grow" />
     </div>
   </div>
-{:else if comment}
+{:else if comment && commentsIds.indexOf(`${comment.id}`) === -1}
   <div
     in:slide={{ delay: index * 100 + 300, duration: 350 }}
     class="w-11/12 rounded-lg overflow-hidden shadow-lg mx-auto mb-10 bg-white
@@ -38,15 +40,19 @@
         </Button>
         <input
           class=" flex-none shadow appearance-none border border-blue-500
-          rounded w-40 py-2 px-3 ml-3 text-gray-700 leading-tight
-          focus:outline-none sticky top-0 text-sm"
+          rounded w-40 py-2 px-3 mx-3 text-gray-700 leading-tight
+          focus:outline-none sticky top-0 text-xs"
           type="text"
           bind:value={TagName}
           placeholder="Tag Name" />
-          <Button
+        <Button
           on:click={() => {
             updateTag(TagName, comment).then(() => {
               console.log('added');
+              getCommentsIds().then(res => {
+                  console.log(res)
+                commentsIds = res;
+              });
             });
           }}>
           Save Comment

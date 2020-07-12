@@ -19,8 +19,17 @@
   export let org = "facebook";
   export let repo = "pyre2";
   $: comments = repo != "" ? getRepoComments(org, repo) : false;
-</script>
 
+  import { updateTag, getCommentsIds } from "../indexDB.js";
+
+  let commentsIds = [];
+  getCommentsIds().then(res => {
+    commentsIds = res;
+  });
+
+  $: console.log("commentsIds",commentsIds)
+
+</script>
 
 {#if comments}
   {#await comments}
@@ -40,7 +49,7 @@
     {:else}
       {#each result as comment, idx}
         {#if comment}
-          <CommentViewer {comment} index={idx} />
+          <CommentViewer bind:commentsIds {comment} index={idx} />
         {/if}
       {/each}
     {/if}
