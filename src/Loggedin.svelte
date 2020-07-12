@@ -106,20 +106,22 @@
           type="text"
           placeholder="Search"
           bind:value={RepoNameSearch} />
-        {#each repos.filter(repo =>
-          RepoNameSearch.length > 0
-            ? repo.name.indexOf(RepoNameSearch) > -1
-            : true
-        ) as repo}
-          <div
-            in:slide={{ duration: 350 }}
-            on:click={() => {
-              SelectedRepo = repo.name;
-            }}
-            class="px-2 p-2 border-gray-500 border-opacity-75 border-t {SelectedRepo === repo.name ? 'bg-teal-300 bg-opacity-75' : 'cursor-pointer hover:bg-teal-300 hover:bg-opacity-25'}">
-            {repo.name}
-          </div>
-        {/each}
+        {#if repos && repos.length > 0}
+          {#each repos.filter(repo =>
+            RepoNameSearch.length > 0
+              ? repo.name.indexOf(RepoNameSearch) > -1
+              : true
+          ) as repo}
+            <div
+              in:slide={{ duration: 350 }}
+              on:click={() => {
+                SelectedRepo = repo.name;
+              }}
+              class="px-2 p-2 border-gray-500 border-opacity-75 border-t {SelectedRepo === repo.name ? 'bg-teal-300 bg-opacity-75' : 'cursor-pointer hover:bg-teal-300 hover:bg-opacity-25'}">
+              {repo.name}
+            </div>
+          {/each}
+        {/if}
       {:catch error}
         not found
       {/await}
