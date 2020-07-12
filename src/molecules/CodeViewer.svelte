@@ -7,7 +7,7 @@
     .trim()
     .split(" ")
     .map(v => Math.abs(parseInt(v.split(",")[0])));
-  const RowIdxMapper = (character,array) => {
+  const RowIdxMapper = (character, array) => {
     var rNumber = -1;
     return array.map(v => {
       if (v.charAt(0) !== character) {
@@ -17,9 +17,9 @@
         return [``, v.charAt(0)];
       }
     });
-  }
-  $: rowsIdxPositive = RowIdxMapper("-",rows);
-  $: rowsIdxNegative = RowIdxMapper("+",rows);;
+  };
+  $: rowsIdxPositive = RowIdxMapper("-", rows);
+  $: rowsIdxNegative = RowIdxMapper("+", rows);
 </script>
 
 <div class="flex">
@@ -28,7 +28,7 @@
       {#each rowsIdxNegative as row}
         <span
           class="block h-5 bg-opacity-50 text-xs leading-5 align-middle
-          font-mono {row[1] == '+' ? 'bg-green-600' : row[1] == '-' ? 'bg-red-600' : ''}">
+          text-center font-mono {row[1] == '+' ? 'bg-green-600' : row[1] == '-' ? 'bg-red-600' : ''}">
           {row[0]}
         </span>
       {/each}
@@ -37,7 +37,7 @@
       {#each rowsIdxPositive as row}
         <span
           class="block h-5 bg-opacity-50 text-xs leading-5 align-middle
-          font-mono {row[1] == '+' ? 'bg-green-600' : row[1] == '-' ? 'bg-red-600' : ''}">
+          text-center font-mono {row[1] == '+' ? 'bg-green-600' : row[1] == '-' ? 'bg-red-600' : ''}">
           {row[0]}
         </span>
       {/each}

@@ -11,16 +11,16 @@
     class="w-11/12 rounded-lg overflow-hidden shadow-lg mx-auto mb-10 bg-white
     p-6">
     <div class="flex mb-6">
-      {#if comment.author}
+      {#if comment.user}
         <img
-          src={comment.author.avatarUrl}
+          src={comment.user.avatar_url}
           alt="editor"
           class="rounded-full w-12 h-12 flex-none mr-2" />
       {/if}
       <div>
-        {@html comment.bodyHTML}
+        {@html comment.body}
       </div>
     </div>
-    <CodeViewer diffHunk={comment.diffHunk} />
+    <CodeViewer diffHunk={comment.diff_hunk} />
   </div>
 {/if}

@@ -1,47 +1,52 @@
 <script>
   import RepoViewer from "./organism/RepoViewer.svelte";
-  import { setClient } from "svelte-apollo";
-  //import gql from "graphql-tag";
-  //import { REPOS } from "./queyrs.js";
+  /*
+        import { setClient } from "svelte-apollo";
+        //import gql from "graphql-tag";
+        //import { REPOS } from "./queyrs.js";
+        import { ApolloClient } from "apollo-client";
+        import { createHttpLink } from "apollo-link-http";
+        import { setContext } from "apollo-link-context";
+        import { InMemoryCache } from "apollo-cache-inmemory";
+        const cache = new InMemoryCache();
+        // content here
+        const httpLink = createHttpLink({
+        // You should use an absolute URL here
+        uri: "https://api.github.com/graphql"
+        });
 
-  export let LogInTocken = false;
-
-  import { ApolloClient } from "apollo-client";
-  import { createHttpLink } from "apollo-link-http";
-  import { setContext } from "apollo-link-context";
-  import { InMemoryCache } from "apollo-cache-inmemory";
-  const cache = new InMemoryCache();
-  // content here
-  const httpLink = createHttpLink({
-    // You should use an absolute URL here
-    uri: "https://api.github.com/graphql"
-  });
-
-  const authLink = setContext((_, { headers }) => {
-    return {
-      headers: {
+        const authLink = setContext((_, { headers }) => {
+        return {
+        headers: {
         ...headers,
         authorization: LogInTocken ? `Bearer ${LogInTocken}` : ""
-      }
-    };
-  });
-  // Cache implementation
-  // Create an Apollo client and pass it to all child components
-  // (uses svelte's built-in context)
-  const apolloClient = new ApolloClient({
-    link: authLink.concat(httpLink),
-
-    cache,
-    request: operation => {
-      operation.setContext({
-        headers: {
-          Authorization: `bearer ${LogInTocken}`
         }
-      });
-    }
-  });
+        };
+        });
+        // Cache implementation
+        // Create an Apollo client and pass it to all child components
+        // (uses svelte's built-in context)
+        const apolloClient = new ApolloClient({
+        link: authLink.concat(httpLink),
 
-  setClient(apolloClient);
+        cache,
+        request: operation => {
+        operation.setContext({
+        headers: {
+        Authorization: `bearer ${LogInTocken}`
+        }
+        });
+        }
+        });
+
+        setClient(apolloClient);
+  */
+
+  export let LogInTocken = false;
+  import { getRepos } from "./GitHubApi.js";
+
+  let OrgName = "facebook";
+  let repos = getRepos(OrgName);
 </script>
 
 <div class="flex flex-row absolute top-0 left-0 w-screen">
@@ -62,14 +67,29 @@
           focus:outline-none"
           id="organization"
           type="text"
-          placeholder="Facebook" />
+          placeholder="Organization"
+          bind:value={OrgName} />
         <button
           class="bg-blue-500 border-blue-500 border hover:bg-blue-700 text-white
           font-bold py-2 px-4 rounded rounded-l-none focus:outline-none text-sm"
-          type="button">
+          type="button"
+          on:click={() => {
+            repos = getRepos(OrgName);
+          }}>
           search
         </button>
       </div>
+    </div>
+    <div class="my-4 px-2 pb-4 border-gray-600 border-opacity-50 border-b">
+      {#await repos}
+        ...loading
+      {:then repos}
+        {#each repos as repo}
+          <div>{repo.name}</div>
+        {/each}
+      {:catch error}
+        not found
+      {/await}
     </div>
   </div>
   <div
