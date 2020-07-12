@@ -44,8 +44,6 @@
 
         setClient(apolloClient);
   */
-
-  export let LogInTocken = false;
   import { getRepos } from "./GitHubApi.js";
 
   let OrgName = "facebook";
@@ -53,7 +51,7 @@
   $: repos = getRepos(SelectedOrgname);
   let SelectedRepo = "pyre2";
   let RepoNameSearch = "";
-  const menu = ["comments","categories","saved",]
+  const menu = ["comments","saved",]
   let menuSelected="comments"
 
 

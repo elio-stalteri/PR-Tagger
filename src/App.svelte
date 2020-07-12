@@ -75,5 +75,5 @@
     </GithubLogin>
   </main>
 {:else}
-  <LoggedIn {LogInTocken} />
+  <LoggedIn />
 {/if}
