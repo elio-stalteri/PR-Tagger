@@ -9,6 +9,8 @@
   let toggleComment = false;
 
   import { updateTag } from "../indexDB.js";
+
+  let TagName = ""
 </script>
 
 {#if loading}
@@ -31,9 +33,6 @@
         <Button
           on:click={() => {
             toggleComment = !toggleComment;
-            updateTag('typescript', comment).then(() => {
-              console.log('added');
-            });
           }}>
           {toggleComment ? 'hide code' : 'show code'}
         </Button>
@@ -42,7 +41,16 @@
           rounded w-40 py-2 px-3 ml-3 text-gray-700 leading-tight
           focus:outline-none sticky top-0 text-sm"
           type="text"
-          placeholder="Search Tag" />
+          bind:value={TagName}
+          placeholder="Tag Name" />
+          <Button
+          on:click={() => {
+            updateTag(TagName, comment).then(() => {
+              console.log('added');
+            });
+          }}>
+          Save Comment
+        </Button>
       </div>
     </div>
     <div class="w-full mb-6 ">
