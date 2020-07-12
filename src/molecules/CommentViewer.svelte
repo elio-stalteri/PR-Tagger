@@ -1,5 +1,4 @@
 <script>
-  // your script goes here
   import { slide } from "svelte/transition";
   import CodeViewer from "./CodeViewer.svelte";
   export let comment = false;
@@ -7,7 +6,6 @@
 </script>
 
 {#if comment}
-  <!-- content here -->
   <div
     transition:slide={{ delay: index * 100 + 500, duration: 500 }}
     class="w-11/12 rounded-lg overflow-hidden shadow-lg mx-auto mb-10 bg-white

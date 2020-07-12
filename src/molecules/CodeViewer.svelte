@@ -7,28 +7,19 @@
     .trim()
     .split(" ")
     .map(v => Math.abs(parseInt(v.split(",")[0])));
-  $: rowsIdxPositive = (() => {
+  const RowIdxMapper = (character,array) => {
     var rNumber = -1;
-    return rows.map(v => {
-      if (v.charAt(0) !== "-") {
+    return array.map(v => {
+      if (v.charAt(0) !== character) {
         rNumber++;
         return [`${rowsNumbers[1] + rNumber}`, v.charAt(0)];
       } else {
         return [``, v.charAt(0)];
       }
     });
-  })();
-  $: rowsIdxNegative = (() => {
-    var rNumber = -1;
-    return rows.map(v => {
-      if (v.charAt(0) !== "+") {
-        rNumber++;
-        return [`${rowsNumbers[1] + rNumber}`, v.charAt(0)];
-      } else {
-        return [``, v.charAt(0)];
-      }
-    });
-  })();
+  }
+  $: rowsIdxPositive = RowIdxMapper("-",rows);
+  $: rowsIdxNegative = RowIdxMapper("+",rows);;
 </script>
 
 <div class="flex">
