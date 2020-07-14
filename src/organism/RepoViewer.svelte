@@ -58,36 +58,33 @@
     {/await}
   {/if}
 {:else if menuSelected === 'saved'}
-  {#if comments}
-    {#await getCommentsTagged()}
-      {#each [0, 0, 0, 0, 0] as _}
-        <CommentViewer loading={true} />
-      {/each}
-    {:then result}
-      {#if Object.keys(result).length === 0}
-        <div
-          in:slide={{ duration: 150 }}
-          class="w-11/12 pt-6 rounded-lg overflow-hidden shadow-lg mx-auto mb-10
-          bg-white p-4">
-          <h1
-            class=" text-3xl text-orange-600 font-extrabold w-full text-center">
-            NO RESULT
-          </h1>
-        </div>
-      {:else}
-        {#each Object.entries(result) as [tag, comments], idx}
-          {#each Object.values(comments) as comment}
-            {#if comment}
-              <CommentViewer {tag} {comment} index={idx} />
-            {/if}
-          {/each}
+  {#await getCommentsTagged()}
+    {#each [0, 0, 0, 0, 0] as _}
+      <CommentViewer loading={true} />
+    {/each}
+  {:then result}
+    {#if Object.keys(result).length === 0}
+      <div
+        in:slide={{ duration: 150 }}
+        class="w-11/12 pt-6 rounded-lg overflow-hidden shadow-lg mx-auto mb-10
+        bg-white p-4">
+        <h1 class=" text-3xl text-orange-600 font-extrabold w-full text-center">
+          NO RESULT
+        </h1>
+      </div>
+    {:else}
+      {#each Object.entries(result) as [tag, comments], idx}
+        {#each Object.values(comments) as comment}
+          {#if comment}
+            <CommentViewer {tag} {comment} index={idx} />
+          {/if}
         {/each}
-      {/if}
-    {:catch error}
-      {localStorage.removeItem('GithubLogInTocken') ? '' : ''}
-      <li>ERROR: {error}</li>
-    {/await}
-  {/if}
+      {/each}
+    {/if}
+  {:catch error}
+    {localStorage.removeItem('GithubLogInTocken') ? '' : ''}
+    <li>ERROR: {error}</li>
+  {/await}
 {:else}
   <!-- else content here -->
 {/if}
