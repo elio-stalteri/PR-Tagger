@@ -42,7 +42,7 @@
 
         {#if tag}
           <div
-            class="flex-none hover:bg-gray-100 font-semibold py-2 px-4 mx-3
+            class="flex-none font-semibold py-2 px-4 mx-3
             border border-gray-400 rounded-lg shadow outline-none leading-3 text-xs
             text-white bg-orange-600 ">
             {tag}
