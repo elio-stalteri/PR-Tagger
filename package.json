@@ -2,7 +2,7 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c --environment client_id:$client_id",
     "dev": "node server-dev/server.js client_id=$client_id client_secret=$client_secret & rollup -c --environment client_id:$client_id  -w ",
     "start": "sirv public"
   },
