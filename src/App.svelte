@@ -1,8 +1,10 @@
 <script>
-  import { ClientId } from "./GitHubConfig.js";
   import Tailwind from "./tailwind.svelte";
   import LoggedIn from "./Loggedin.svelte";
   import GithubLogin from "./GitHubLogin.svelte";
+
+  console.log("GITHUB CLIENTID",GITHUB_CLIENTID)
+  const client_id = GITHUB_CLIENTID;
   export let name;
   const convertQueryParams = url => {
     const query = url;
@@ -55,7 +57,7 @@
     </p>
 
     <GithubLogin
-      clientId={ClientId}
+      clientId={client_id}
       scope="user:email"
       redirectUri="http://localhost:5000/"
       on:success={params => {
@@ -64,7 +66,7 @@
             return response.text();
           })
           .then(function(data) {
-            LogInTocken = convertQueryParams(data).access_token;
+            LogInTocken = data;
             localStorage.setItem('GithubLogInTocken', LogInTocken);
             console.log('LogInTocken', LogInTocken);
           });
