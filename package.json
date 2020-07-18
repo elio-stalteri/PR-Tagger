@@ -23,18 +23,10 @@
     "tailwindcss": "^1.4.6"
   },
   "dependencies": {
-    "apollo-cache-inmemory": "^1.6.6",
-    "apollo-client": "^2.6.10",
-    "apollo-link": "^1.2.14",
-    "apollo-link-context": "^1.0.20",
-    "apollo-link-http": "^1.5.17",
-    "graphql": "^15.3.0",
-    "graphql-tag": "^2.10.4",
     "idb": "^5.0.4",
     "npm-run-all": "^4.1.5",
     "page": "^1.11.6",
     "sirv-cli": "^0.4.4",
-    "svelte-apollo": "^0.3.0",
-    "svelte-github-login": "^1.2.0"
+    "xstate": "^4.11.0"
   }
 }
