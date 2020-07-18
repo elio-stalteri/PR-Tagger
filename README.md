@@ -1,4 +1,4 @@
-# PR-tagger
+# PR-Tagger
 
 This is a project that let you look and tag all the reviews in all the PR of a repository
 
