@@ -1,50 +1,10 @@
 <script>
   import { slide } from "svelte/transition";
-  import RepoViewer from "./organism/RepoViewer.svelte";
-  import Button from "./atoms/Button.svelte";
+  import RepoViewer from "../organism/RepoViewer.svelte";
+  import Button from "../atoms/Button.svelte";
 
-  /*
-        import { setClient } from "svelte-apollo";
-        //import gql from "graphql-tag";
-        //import { REPOS } from "./queyrs.js";
-        import { ApolloClient } from "apollo-client";
-        import { createHttpLink } from "apollo-link-http";
-        import { setContext } from "apollo-link-context";
-        import { InMemoryCache } from "apollo-cache-inmemory";
-        const cache = new InMemoryCache();
-        // content here
-        const httpLink = createHttpLink({
-        // You should use an absolute URL here
-        uri: "https://api.github.com/graphql"
-        });
-
-        const authLink = setContext((_, { headers }) => {
-        return {
-        headers: {
-        ...headers,
-        authorization: LogInTocken ? `Bearer ${LogInTocken}` : ""
-        }
-        };
-        });
-        // Cache implementation
-        // Create an Apollo client and pass it to all child components
-        // (uses svelte's built-in context)
-        const apolloClient = new ApolloClient({
-        link: authLink.concat(httpLink),
-
-        cache,
-        request: operation => {
-        operation.setContext({
-        headers: {
-        Authorization: `bearer ${LogInTocken}`
-        }
-        });
-        }
-        });
-
-        setClient(apolloClient);
-  */
-  import { getRepos } from "./GitHubApi.js";
+ 
+  import { getRepos } from "../GitHubApi.js";
 
   let OrgName = "facebook";
   let SelectedOrgname = "facebook";
@@ -54,7 +14,7 @@
   const menu = ["comments", "saved"];
   let menuSelected = "comments";
 
-  import { idbKeyval } from "./indexDB.js";
+  import { idbKeyval } from "../indexDB.js";
 </script>
 
 <div class="flex flex-row absolute top-0 left-0 w-screen">
