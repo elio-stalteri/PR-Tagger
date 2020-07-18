@@ -2,8 +2,9 @@
   import Tailwind from "./tailwind.svelte";
   import LoggedIn from "./Loggedin.svelte";
   import GithubLogin from "./GitHubLogin.svelte";
+  import Button from "./atoms/Button.svelte";
 
-  console.log("GITHUB CLIENTID",GITHUB_CLIENTID)
+  console.log("GITHUB CLIENTID", GITHUB_CLIENTID);
   const client_id = GITHUB_CLIENTID;
   export let name;
   const convertQueryParams = url => {
@@ -25,36 +26,15 @@
     @apply p-0;
     @apply m-0;
   }
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
 
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
 </style>
 
 <Tailwind />
 {#if !LogInTocken}
-  <main>
-    <h1 class="font-bold">Hello {name}!</h1>
-    <p>
-      Visit the
-      <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
-      to learn how to build Svelte apps.
-    </p>
+  <main class="p-4 mx-auto my-4 max-w-md text-center">
+    <h1 class=" text-orange-600 font-extrabold text-center text-4xl shadow-lg mb-5 bg-orange-200">
+      PR Tagger
+    </h1>
 
     <GithubLogin
       clientId={client_id}
@@ -73,7 +53,7 @@
       }}
       on:error={error => console.log(error)}
       let:onLogin>
-      <button on:click={onLogin}>Github Login</button>
+      <Button on:click={onLogin}>Github Login</Button>
     </GithubLogin>
   </main>
 {:else}

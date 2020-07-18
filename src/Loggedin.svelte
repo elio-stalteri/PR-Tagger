@@ -62,7 +62,7 @@
     <h1
       class=" text-orange-600 font-extrabold text-center text-4xl shadow-lg
       border-r border-grey-500">
-      PR Analyzer
+      PR Tagger
     </h1>
     <div class="my-4 px-2 pb-4 border-gray-600 border-opacity-50 border-b">
       <label
