@@ -8,7 +8,7 @@ This is a project that let you look and tag all the reviews in all the PR of a r
 
 ## Get started
 
-Install the dependencies...
+Install the dependencies and start the app...
 
 ```bash
 #in the root of the project
