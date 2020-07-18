@@ -1,3 +1,5 @@
+
+
 <script>
   import Tailwind from "./tailwind.svelte";
   import router from "page";
@@ -47,6 +49,7 @@
   });
 
   router.start();
+  import {state} from "./xState/rootState.js"
 </script>
 
 <style>
@@ -58,4 +61,8 @@
 </style>
 
 <Tailwind />
-<svelte:component this={page} {params} />
+{#if $state.matches('home')}
+  <Home />
+{:else if $state.matches('login')}
+  <Login />
+{/if}

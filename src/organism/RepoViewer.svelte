@@ -2,23 +2,13 @@
   import { slide } from "svelte/transition";
   import CommentViewer from "../molecules/CommentViewer.svelte";
   import { getRepoComments } from "../GitHubApi.js";
-  /*
-        import { getClient, query } from "svelte-apollo";
-        const client = getClient();
-        import { REPOS } from "../queries.js";
-        const repos = query(client, {
-        query: REPOS
-        });
-  */
-  /*
-    facebook
-    pyre2
-    Port to python3
-  */
-  export let menuSelected = "comments";
-  export let org = "facebook";
-  export let repo = "pyre2";
-  $: comments = repo != "" ? getRepoComments(org, repo) : false;
+
+  import { state } from "../xState/rootState.js";
+
+  $: comments =
+    $state.context.organization && $state.context.repo
+      ? getRepoComments($state.context.organization, $state.context.repo)
+      : false;
 
   import { getCommentsIds, getCommentsTagged } from "../indexDB.js";
 
@@ -28,7 +18,7 @@
   });
 </script>
 
-{#if menuSelected === 'comments'}
+{#if $state.matches('home.comments')}
   {#if comments}
     {#await comments}
       {#each [0, 0, 0, 0, 0] as _}
@@ -57,7 +47,7 @@
       <li>ERROR: {error}</li>
     {/await}
   {/if}
-{:else if menuSelected === 'saved'}
+{:else if $state.matches('home.saved')}
   {#await getCommentsTagged()}
     {#each [0, 0, 0, 0, 0] as _}
       <CommentViewer loading={true} />
@@ -85,6 +75,4 @@
     {localStorage.removeItem('GithubLogInTocken') ? '' : ''}
     <li>ERROR: {error}</li>
   {/await}
-{:else}
-  <!-- else content here -->
 {/if}

@@ -65,16 +65,6 @@
     popupWindow = window.open(`${urlGithub}?${urlParams}`, "github-oauth", "");
     dispatch("request");
     poll();
-
-    /*
-    POST https://github.com/login/oauth/access_token
-Parameters
-Name	Type	Description
-client_id	string	Required. The client ID you received from GitHub for your GitHub App.
-client_secret	string	Required. The client secret you received from GitHub for your GitHub App.
-code	string	Required. The code you received as a response to Step 1.
-redirect_uri	string	The URL in your application where users are sent after authorization.
-*/
   };
 </script>
 

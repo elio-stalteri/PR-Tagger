@@ -22,9 +22,7 @@
           return response.text();
         })
         .then(function(data) {
-          LogInTocken = data;
-          localStorage.setItem('GithubLogInTocken', LogInTocken);
-          console.log('LogInTocken', LogInTocken);
+          localStorage.setItem('GithubLogInTocken', data);
         });
     }}
     on:error={error => console.log(error)}

@@ -1,8 +1,8 @@
-import svelte from 'rollup-plugin-svelte';
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import livereload from 'rollup-plugin-livereload';
-import { terser } from 'rollup-plugin-terser';
+import svelte from "rollup-plugin-svelte";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import livereload from "rollup-plugin-livereload";
+import { terser } from "rollup-plugin-terser";
 import sveltePreprocess from "svelte-preprocess";
 import replace from "@rollup/plugin-replace";
 
@@ -19,6 +19,7 @@ export default {
   plugins: [
     replace({
       GITHUB_CLIENTID: JSON.stringify(process.env.client_id),
+      "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     svelte({
       // enable run-time checks when not in production
@@ -60,18 +61,18 @@ export default {
 };
 
 function serve() {
-	let started = false;
+  let started = false;
 
-	return {
-		writeBundle() {
-			if (!started) {
-				started = true;
+  return {
+    writeBundle() {
+      if (!started) {
+        started = true;
 
-				require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
-					stdio: ['ignore', 'inherit', 'inherit'],
-					shell: true
-				});
-			}
-		}
-	};
+        require("child_process").spawn("npm", ["run", "start", "--", "--dev"], {
+          stdio: ["ignore", "inherit", "inherit"],
+          shell: true,
+        });
+      }
+    },
+  };
 }
