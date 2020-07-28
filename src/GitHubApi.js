@@ -49,3 +49,32 @@ export const getRepos = async function (owner) {
   console.log("repos links:", links);
   return await resp.json();
 };
+
+export const getRepoPRComments = async function (owner, repo, pull_number) {
+  const resp = await fetch(
+    `${BaseUrl}/repos/${owner}/${repo}/pulls/${pull_number}/comments?sort&direction=asc&page=1&per_page=100`,
+    {
+      headers: {
+        Authorization: " token " + localStorage.getItem("GithubLogInTocken"),
+      },
+    }
+  );
+  const links = getPagesConfig(resp);
+  console.log("comments links:", links);
+  return await resp.json();
+};
+
+export const getRepoPRs = async function (owner, repo) {
+  const resp = await fetch(
+    `${BaseUrl}/repos/${owner}/${repo}/pulls?sort&direction=asc&page=1&per_page=100`,
+    {
+      headers: {
+        Authorization: " token " + localStorage.getItem("GithubLogInTocken"),
+      },
+    }
+  );
+  const links = getPagesConfig(resp);
+  console.log("comments links:", links);
+  return await resp.json();
+};
+
