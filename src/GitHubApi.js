@@ -25,6 +25,46 @@ const getPagesConfig = function (resp) {
   }, {});
 };
 
+const fetchRepoComments = async function (owner, repo, page) {
+  const resp = await fetch(
+    `${BaseUrl}/repos/${owner}/${repo}/pulls/comments?sort&direction=asc&page=${page}&per_page=100`,
+    {
+      headers: {
+        Authorization: " token " + localStorage.getItem("GithubLogInTocken"),
+      },
+    }
+  );
+  const links = getPagesConfig(resp);
+  const res = await resp.json();
+  return { res, links };
+};
+
+export const getAllRepoComments = async function (owner, repo) {
+  const firstRes = await fetchRepoComments(owner, repo, 1);
+  let current_page = 1;
+  let number_of_pages = firstRes.links.last;
+  let result = [...firstRes.res];
+  if (number_of_pages !== null) {
+    while (current_page < number_of_pages) {
+      current_page++;
+      const nextRes = await fetchRepoComments(owner, repo, current_page);
+      result = [...result, ...nextRes.res];
+    }
+  }
+  const aggregatedComments = result.reduce((acc, v) => {
+    if (v.diff_hunk in acc) {
+      acc[v.diff_hunk].push(v);
+    } else {
+      acc[v.diff_hunk] = [v];
+    }
+    return acc;
+  }, {});
+
+  console.log("new request test", aggregatedComments);
+
+  return result;
+};
+
 export const getRepoComments = async function (owner, repo) {
   const resp = await fetch(
     `${BaseUrl}/repos/${owner}/${repo}/pulls/comments?sort&direction=asc&page=1&per_page=100`,
@@ -40,11 +80,14 @@ export const getRepoComments = async function (owner, repo) {
 };
 
 export const getRepos = async function (owner) {
-  const resp = await fetch(`${BaseUrl}/orgs/${owner}/repos?page=1&per_page=100`, {
-    headers: {
-      Authorization: " token " + localStorage.getItem("GithubLogInTocken"),
-    },
-  });
+  const resp = await fetch(
+    `${BaseUrl}/orgs/${owner}/repos?page=1&per_page=100`,
+    {
+      headers: {
+        Authorization: " token " + localStorage.getItem("GithubLogInTocken"),
+      },
+    }
+  );
   const links = getPagesConfig(resp);
   console.log("repos links:", links);
   return await resp.json();
@@ -77,4 +120,3 @@ export const getRepoPRs = async function (owner, repo) {
   console.log("comments links:", links);
   return await resp.json();
 };
-

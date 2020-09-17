@@ -3,32 +3,29 @@
   import { getRepos } from "../GitHubApi.js";
   import { state, sendEvent } from "../xState/rootState.js";
 
-  let OrgName = "facebook";
-  let SelectedOrgname = "facebook";
+  let OrgName = $state.context.organization;
+  let SelectedOrgname = $state.context.organization;
   $: repos = getRepos(SelectedOrgname);
-  let SelectedRepo = "pyre2";
+  let SelectedRepo = $state.context.repo;
   let RepoNameSearch = "";
 
   import { idbKeyval } from "../indexDB.js";
 </script>
 
-<div class="flex-none w-64 h-screen bg-white overflow-y-hidden relative">
+<div class="relative flex-none w-64 h-screen overflow-y-hidden bg-white">
   <h1
-    class=" text-orange-600 font-extrabold text-center text-4xl shadow-lg
-    border-r border-grey-500">
+    class="text-4xl font-extrabold text-center text-orange-600 border-r shadow-lg  border-grey-500">
     PR Tagger
   </h1>
-  <div class="my-4 px-2 pb-4 border-gray-600 border-opacity-50 border-b">
+  <div class="px-2 pb-4 my-4 border-b border-gray-600 border-opacity-50">
     <label
-      class="block text-gray-700 text-sm font-bold mb-2"
+      class="block mb-2 text-sm font-bold text-gray-700"
       for="organization">
       Organization Name
     </label>
     <div class="flex justify-between">
       <input
-        class="shadow appearance-none border border-blue-500 rounded
-        rounded-r-none w-full py-1 px-3 text-gray-700 leading-tight
-        focus:outline-none"
+        class="w-full px-3 py-1 leading-tight text-gray-700 border border-blue-500 rounded rounded-r-none shadow appearance-none focus:outline-none"
         id="organization"
         type="text"
         placeholder="Organization"
@@ -41,8 +38,7 @@
         }}
         bind:value={OrgName} />
       <button
-        class="bg-blue-500 border-blue-500 border hover:bg-blue-700 text-white
-        font-bold py-2 px-4 rounded rounded-l-none focus:outline-none text-sm"
+        class="px-4 py-2 text-sm font-bold text-white bg-blue-500 border border-blue-500 rounded rounded-l-none hover:bg-blue-700 focus:outline-none"
         type="button"
         on:click={() => {
           SelectedOrgname = OrgName;
@@ -54,21 +50,18 @@
     </div>
   </div>
   <div
-    class="my-4 px-2 pb-4 border-gray-600 border-opacity-50 border-b
-    overflow-y-scroll h-full">
+    class="h-full px-2 pb-4 my-4 overflow-y-scroll border-b border-gray-600 border-opacity-50">
     {#await repos}
       {#each [0, 0, 0, 0, 0, 0, 0] as _}
         <div
           in:slide={{ duration: 350 }}
-          class="skeleton-box px-2 p-2 border-gray-500 border-opacity-75
-          border-t text-white">
+          class="p-2 px-2 text-white border-t border-gray-500 border-opacity-75 skeleton-box">
           ...
         </div>
       {/each}
     {:then repos}
       <input
-        class="mb-4 shadow appearance-none border border-blue-500 rounded w-full
-        py-1 px-3 text-gray-700 leading-tight focus:outline-none sticky top-0"
+        class="sticky top-0 w-full px-3 py-1 mb-4 leading-tight text-gray-700 border border-blue-500 rounded shadow appearance-none focus:outline-none"
         id="organization"
         type="text"
         placeholder="Search"

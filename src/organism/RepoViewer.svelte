@@ -1,14 +1,16 @@
 <script>
   import { slide } from "svelte/transition";
   import CommentViewer from "../molecules/CommentViewer.svelte";
-  import { getRepoComments } from "../GitHubApi.js";
+  import { getRepoComments ,getAllRepoComments} from "../GitHubApi.js";
 
   import { state } from "../xState/rootState.js";
 
-  $: comments =
-    $state.context.organization && $state.context.repo
-      ? getRepoComments($state.context.organization, $state.context.repo)
-      : false;
+
+  
+  $: comments  = $state.context.organization && $state.context.repo
+      ? getAllRepoComments($state.context.organization, $state.context.repo)
+      : false 
+
 
   import { getCommentsIds, getCommentsTagged } from "../indexDB.js";
 
@@ -28,10 +30,9 @@
       {#if result.length === 0}
         <div
           in:slide={{ duration: 150 }}
-          class="w-11/12 pt-6 rounded-lg overflow-hidden shadow-lg mx-auto mb-10
-          bg-white p-4">
+          class="w-11/12 p-4 pt-6 mx-auto mb-10 overflow-hidden bg-white rounded-lg shadow-lg">
           <h1
-            class=" text-3xl text-orange-600 font-extrabold w-full text-center">
+            class="w-full text-3xl font-extrabold text-center text-orange-600 ">
             NO RESULT
           </h1>
         </div>
@@ -56,9 +57,8 @@
     {#if Object.keys(result).length === 0}
       <div
         in:slide={{ duration: 150 }}
-        class="w-11/12 pt-6 rounded-lg overflow-hidden shadow-lg mx-auto mb-10
-        bg-white p-4">
-        <h1 class=" text-3xl text-orange-600 font-extrabold w-full text-center">
+        class="w-11/12 p-4 pt-6 mx-auto mb-10 overflow-hidden bg-white rounded-lg shadow-lg">
+        <h1 class="w-full text-3xl font-extrabold text-center text-orange-600 ">
           NO RESULT
         </h1>
       </div>
