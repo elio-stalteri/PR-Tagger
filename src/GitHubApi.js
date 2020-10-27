@@ -1,3 +1,5 @@
+import { object_without_properties } from "svelte/internal";
+
 const BaseUrl = "https://api.github.com";
 
 const linkTypes = ["prev", "next", "last", "first"];
@@ -53,16 +55,16 @@ export const getAllRepoComments = async function (owner, repo) {
   }
   const aggregatedComments = result.reduce((acc, v) => {
     if (v.diff_hunk in acc) {
-      acc[v.diff_hunk].push(v);
+      acc[v.diff_hunk].comments.push(v);
     } else {
-      acc[v.diff_hunk] = [v];
+      acc[v.diff_hunk] = { ...v, comments: [{ user: v.user, body: v.body }] };
     }
     return acc;
   }, {});
 
   console.log("new request test", aggregatedComments);
 
-  return result;
+  return Object.values(aggregatedComments);
 };
 
 export const getRepoComments = async function (owner, repo) {
