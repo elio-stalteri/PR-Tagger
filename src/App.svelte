@@ -45,7 +45,7 @@
     params = {};
   });
   router("*", () => {
-    router("organization");
+    //router("organization");
   });
 
   router.start();

@@ -1,8 +1,51 @@
 <script>
-  import GithubLogin from "../molecules/GitHubLogin.svelte";
+  import { onMount} from "svelte";
   import Button from "../atoms/Button.svelte";
+  import {state,sendEvent} from "../xState/rootState"
 
+const redirectUri="http://localhost:5000/login"
   const client_id = GITHUB_CLIENTID;
+  const urlGithub = "https://github.com/login/oauth/authorize";
+  const scope="user:email"
+
+  let GithHubCode = false;
+
+  onMount(()=>{
+    GithHubCode =location.href.split("?")[1].split("&").reduce((acc,v)=>{
+      const formatted = v.split("=").map((p)=>decodeURIComponent(p));
+      return {...acc,[formatted[0]]:formatted[1]}
+    },{})
+  })
+
+  $: console.log($state)
+
+  $: if(GithHubCode){
+    console.log(GithHubCode);
+    fetch('http://localhost:3000/' + GithHubCode.code)
+        .then(function(response) {
+          return response.text();
+        })
+        .then(function(data) {
+          console.log(data)
+          localStorage.setItem('GithubLogInTocken', data);
+          sendEvent("HOME")
+        });
+  }
+
+  const useParam = (name, variable) => {
+    if (variable) {
+      return `&${name}=${variable}`;
+    }
+    return "";
+  };
+  const onLogin = ()=>{
+    let urlParams = `client_id=${client_id}`;
+    urlParams += useParam("scope", scope);
+    urlParams += useParam("redirect_uri", redirectUri);
+    urlParams += useParam("allow_signup", "false");
+    console.log(`${urlGithub}?${urlParams}`);
+    location.href = `${urlGithub}?${urlParams}`;
+  }
 </script>
 
 <main class="max-w-md p-4 mx-auto my-4 text-center">
@@ -11,21 +54,7 @@
     PR Tagger
   </h1>
 
-  <GithubLogin
-    clientId={client_id}
-    scope="user:email"
-    redirectUri="http://localhost:5000/"
-    on:success={params => {
-      fetch('http://localhost:3000/' + params.detail.code)
-        .then(function(response) {
-          return response.text();
-        })
-        .then(function(data) {
-          localStorage.setItem('GithubLogInTocken', data);
-        });
-    }}
-    on:error={error => console.log(error)}
-    let:onLogin>
+  
     <Button on:click={onLogin}>Github Login</Button>
-  </GithubLogin>
+
 </main>

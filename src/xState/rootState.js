@@ -64,8 +64,12 @@ const options = {
   guards: {
     checkTockenInLocalStorage: () =>
       !!localStorage.getItem("GithubLogInTocken"),
-    checkNotTockenInLocalStorage: () =>
-      !localStorage.getItem("GithubLogInTocken"),
+    checkNotTockenInLocalStorage: () =>{
+      console.log(
+        "GithubLogInTocken",
+        localStorage.getItem("GithubLogInTocken")
+      );
+      return !localStorage.getItem("GithubLogInTocken")},
   },
   services: {
     /* ... */
