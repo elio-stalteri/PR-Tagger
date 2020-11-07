@@ -62,7 +62,7 @@ export const getAllRepoComments = async function (owner, repo) {
     return acc;
   }, {});
 
-  console.log("new request test", aggregatedComments);
+  console.log("new request test", Object.values(aggregatedComments));
 
   return Object.values(aggregatedComments);
 };
